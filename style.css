@@ -1,0 +1,203 @@
+* {
+    font-family: monospace;
+}
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    width: 100vw;
+    height: 100vh;
+
+    color: white;
+    background-color: mediumpurple;
+}
+
+button,
+input[type=submit] {
+    padding: 0.5rem;
+    text-transform: uppercase;
+}
+
+input[type=text],
+input[type=number] {
+    padding: 0.5rem;
+}
+
+input,
+textarea {
+    outline: none;
+}
+
+.banner {
+    text-transform: uppercase;
+}
+
+.banner * {
+    text-align: center;
+}
+
+.banner h1 {
+    font-size: 3rem;
+    font-style: italic;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.banner h2 {
+    font-size: 2rem;
+}
+
+.banner h3 {
+    font-size: 1rem;
+}
+
+#welcome,
+#chooseArea,
+#editStreets,
+#streetView,
+#editHouse {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#chooseArea form {
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#editStreets ul {
+    list-style: none;
+
+    height: 40vh;
+
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-auto-rows: max-content;
+    place-items: center;
+    gap: 0.5rem;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    width: 90vw;
+}
+
+#editStreets ul li {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    place-items: center;
+}
+
+#editStreets ul li span {
+    font-weight: bolder;
+}
+
+#editStreets ul li button {
+    padding: 0.25rem;
+    max-width: fit-content
+}
+
+#selectStreet {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    overflow-x: scroll;
+    gap: 0.5rem;
+    overflow-y: hidden;
+    width: 90vw;
+}
+
+#selectStreet button {
+    min-width: fit-content;
+}
+
+.currentStreet {
+    background-color: beige;
+}
+
+#selectHouse {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100vw;
+}
+
+#houses {
+    display: grid;
+    grid-template-columns: 4rem 4rem 4rem 4rem 4rem;
+    gap: 1rem;
+}
+
+#house button div {
+    color: white;
+    mix-blend-mode: difference;
+}
+
+.house-booked {
+    background-color: green;
+}
+
+.house-qualified {
+    background-color: coral;
+}
+
+.house-reknock {
+    background-color: lightblue;
+}
+
+.house-nonqualified {
+    background-color: beige;
+}
+
+.house-knocked {
+    background-color: lightpink;
+}
+
+.house-unknocked {}
+
+#nextFrame,
+#previousFrame {
+    height: 10rem;
+}
+
+#editHouse table {
+    width: 90vw;
+}
+
+#editHouse table * {
+    text-align: center;
+}
+
+#actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90vw;
+}
+
+#notes {
+    padding: 1rem;
+    width: calc(90vw - 1rem);
+    height: 10rem;
+    overflow-y: scroll;
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurfProwlv2</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- There are three main pages: setup page, view the houses on a street, interact with a house -->
+
+    <section id="welcome">
+        <header class="banner">
+            <h1>Turf Prowler</h1>
+            <h3>Prowl your turf like a pro</h3>
+        </header>
+        <button id="getStarted">Get Started</button>
+    </section>
+
+    <section id="chooseArea">
+        <header class="banner">
+            <h2>Choose your area</h2>
+        </header>
+        <form>
+            <label for="setSuburb">Suburb</label>
+            <input type="text" name="setSuburb" id="setSuburb">
+
+            <label for="setPostCode">Postcode</label>
+            <input type="number" name="setPostCode" id="setPostCode">
+
+            <input type="submit" value="Edit Streets">
+        </form>
+    </section>
+
+    <section id="editStreets">
+        <header class="banner">
+            <h2>Edit Streets</h2>
+        </header>
+        <form>
+            <input type="text" name="street" id="street">
+            <input type="submit" value="Add">
+        </form>
+        <ul>
+            <!-- Streets are added here in the format: <li><span>John Street<span><button>Delete</button></li> -->
+        </ul>
+        <button id="start">Start</button>
+    </section>
+
+    <section id="streetView">
+        <header class="banner">
+            <h2 id="area"></h2>
+            <button id="manualChooseArea">Change Area</button>
+            <button id="manualEditStreets">Edit Streets</button>
+        </header>
+        <div id="selectStreet">
+            <!-- Streets are added here as buttons, and clicking on them sets the current street -->
+        </div>
+        <div id="selectHouse">
+            <button id="previousFrame">&lt;</button>
+            <div id="houses">
+                <!-- Houses are added here as buttons, and clicking on them takes you to the corresponding page to edit the house -->
+            </div>
+            <button id="nextFrame">&gt;</button>
+        </div>
+    </section>
+
+    <section id="editHouse">
+        <header class="banner">
+            <h1 id="addressLine1"></h1>
+            <h3 id="addressLine2"></h3>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>Knocks</th>
+                    <th>Contacts</th>
+                    <th>Reknock?</th>
+                    <th>Qualified?</th>
+                    <th>Booked?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="infoKnocks"></td>
+                    <td id="infoContacts"></td>
+                    <td id="infoReknock"></td>
+                    <td id="infoQualified"></td>
+                    <td id="infoBooked"></td>
+                </tr>
+                <tr>
+                    <td><button id="knock">Knock</button></td>
+                    <td><button id="contact">Contact</button></td>
+                    <td><button id="reknock">Reknock</button></td>
+                    <td><button id="qualify">Qualify</button></td>
+                    <td><button id="book">Book</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="back">Back</button>
+        <form>
+            <textarea name="notes" id="notes" placeholder="Notes..."></textarea>
+        </form>
+    </section>
+
+    <script src="js/data.js"></script>
+    <script src="js/editStreets.js"></script>
+    <script src="js/streetView.js"></script>
+    <script src="js/editHouse.js"></script>
+    <script src="js/pages.js"></script>
+    <script>
+        document.querySelector("#getStarted").addEventListener("click", (_event) => {
+            loadPage(pages.chooseArea);
+        });
+
+        document.querySelector("#chooseArea form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const fd = new FormData(event.target);
+            const obj = Object.fromEntries(fd.entries());
+
+            setSuburb(obj.setSuburb);
+            setPostCode(obj.setPostCode);
+
+            console.log("Setting area...");
+            console.table({ suburb: getSuburb(), postCode: getPostCode() });
+
+            loadPage(pages.editStreets);
+            document.querySelector("#chooseArea form").reset();
+        });
+
+        document.querySelector("#editStreets form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const fd = new FormData(event.target);
+            const obj = Object.fromEntries(fd.entries());
+            const streets = getStreets();
+
+            if (!streets.includes(obj.street)) {
+                setStreets([obj.street, ...streets]);
+                renderEditableStreets();
+            }
+
+            document.querySelector("#editStreets form").reset();
+        });
+
+        document.querySelector("#start").addEventListener("click", (_event) => {
+            const streets = getStreets();
+
+            if (streets.length !== 0) {
+                setCurrentStreet(streets[0]);
+                loadPage(pages.streetView);
+            }
+        });
+
+        document.querySelector("#manualChooseArea").addEventListener("click", (_event) => {
+            loadPage(pages.chooseArea);
+        });
+
+        document.querySelector("#manualEditStreets").addEventListener("click", (_event) => {
+            loadPage(pages.editStreets);
+        });
+
+        document.querySelector("#previousFrame").addEventListener("click", (_event) => {
+            previousHouseFrame();
+        })
+
+        document.querySelector("#nextFrame").addEventListener("click", (_event) => {
+            nextHouseFrame();
+        });
+
+        document.querySelector("#knock").addEventListener("click", (_event) => {
+            knock();
+        });
+
+        document.querySelector("#contact").addEventListener("click", (_event) => {
+            contact();
+        });
+
+        document.querySelector("#reknock").addEventListener("click", (_event) => {
+            toggleReknock();
+        });
+
+        document.querySelector("#qualify").addEventListener("click", (_event) => {
+            toggleQualified();
+        });
+
+        document.querySelector("#book").addEventListener("click", (_event) => {
+            toggleBooked();
+        });
+
+        document.querySelector("#back").addEventListener("click", (_event) => {
+            clearCurrentHouse();
+            loadPage(pages.streetView);
+        })
+
+        document.querySelector("#notes").addEventListener("input", (event) => {
+            setNotes(event.target.value);
+        });
+    </script>
+</body>
+
+</html>
