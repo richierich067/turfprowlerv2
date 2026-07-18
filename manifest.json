@@ -4,7 +4,7 @@
   "display": "standalone",
   "name": "Turf Prowler V2",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/turfprowlerv2",
   "short_name": "turfprowlerv2",
   "start_url": "/",
   "theme_color": "#ffffff",
