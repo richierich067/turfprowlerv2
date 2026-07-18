@@ -18,7 +18,7 @@ const renderEditableStreets = () => {
             const remove = document.createElement("button");
 
             name.innerText = street;
-            remove.innerText = "Remove";
+            remove.innerHTML = "&#x2715;";
 
             remove.addEventListener("click", (_event) => {
                 setStreets(getStreets().filter((_street) => _street !== street));

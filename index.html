@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurfProwlv2</title>
 
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -25,13 +26,9 @@
             <h2>Choose your area</h2>
         </header>
         <form>
-            <label for="setSuburb">Suburb</label>
-            <input type="text" name="setSuburb" id="setSuburb">
-
-            <label for="setPostCode">Postcode</label>
-            <input type="number" name="setPostCode" id="setPostCode">
-
-            <input type="submit" value="Edit Streets">
+            <input type="text" name="setSuburb" id="setSuburb" placeholder="Suburb">
+            <input type="number" name="setPostCode" id="setPostCode" placeholder="Postcode">
+            <input type="submit" value="Next">
         </form>
     </section>
 
@@ -41,12 +38,12 @@
         </header>
         <form>
             <input type="text" name="street" id="street">
-            <input type="submit" value="Add">
+            <input type="submit" value="+">
         </form>
         <ul>
             <!-- Streets are added here in the format: <li><span>John Street<span><button>Delete</button></li> -->
         </ul>
-        <button id="start">Start</button>
+        <button id="start">Next</button>
     </section>
 
     <section id="streetView">
@@ -105,6 +102,11 @@
         </form>
     </section>
 
+    <script>
+        if (typeof navigator.serviceWorker !== 'undefined') {
+            navigator.serviceWorker.register('sw.js')
+        }
+    </script>
     <script src="js/data.js"></script>
     <script src="js/editStreets.js"></script>
     <script src="js/streetView.js"></script>
@@ -121,14 +123,13 @@
             const fd = new FormData(event.target);
             const obj = Object.fromEntries(fd.entries());
 
-            setSuburb(obj.setSuburb);
-            setPostCode(obj.setPostCode);
+            if (obj.setSuburb && obj.setPostCode) {
+                setSuburb(obj.setSuburb);
+                setPostCode(obj.setPostCode);
 
-            console.log("Setting area...");
-            console.table({ suburb: getSuburb(), postCode: getPostCode() });
-
-            loadPage(pages.editStreets);
-            document.querySelector("#chooseArea form").reset();
+                loadPage(pages.editStreets);
+                document.querySelector("#chooseArea form").reset();
+            }
         });
 
         document.querySelector("#editStreets form").addEventListener("submit", (event) => {
