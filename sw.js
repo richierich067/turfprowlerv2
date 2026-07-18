@@ -1,46 +1,45 @@
-// This is the "Offline page" service worker
+// Idk jack shiii about PWAS, this is total larping on my part type shiii
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+const CACHE_NAME = "tpv2cache";
+const PRECACHE_ASSETS = [
+  "style.css",
+  "index.html",
+  "js/data.js",
+  "js/editHouse.js",
+  "js/editStreets.js",
+  "js/pages.js",
+  "js/streetView.js",
+];
 
-const CACHE = "pwabuilder-page";
-
-const offlineFallbackPage = "index.html";
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
+// Download the assets that we need to cache
+self.addEventListener("install", event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    cache.addAll(PRECACHE_ASSETS);
+  })());
 });
 
-self.addEventListener('install', async (event) => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
-  );
+// Run immediately after install
+self.addEventListener("activate", event => {
+  // Claim any existing instances of the app immediately, without requiring them to be reloaded.
+  event.waitUntil(self.clients.claim());
 });
 
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
+// Try to find assets in the offline cache before checking the network.
+self.addEventListener("fetch", event => {
+  event.respondWith(async () => {
+    const cache = await caches.open(CACHE_NAME);
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
+    // match the request to our cache
+    const cachedResponse = await cache.match(event.request);
 
-        if (preloadResp) {
-          return preloadResp;
-        }
-
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
-
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
-      }
-    })());
-  }
+    // check if we got a valid response
+    if (cachedResponse !== undefined) {
+      // Cache hit, return the resource
+      return cachedResponse;
+    } else {
+      // Otherwise, go to the network
+      return fetch(event.request)
+    };
+  });
 });

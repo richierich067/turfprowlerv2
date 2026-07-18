@@ -1,13 +1,13 @@
 {
+  "name": "TurfProwler",
+  "short_name": "trfprwlr2",
+  "description": "Prowl your turf like a fucking demon cuz",
+  "id": "/turfprowlerv2/",
+  "start_url": "/turfprowlerv2/",
+  "scope": "/turfprowlerv2/",
+  "display": "standalone",
   "background_color": "#ffffff",
   "dir": "ltr",
-  "display": "standalone",
-  "name": "Turf Prowler V2",
   "orientation": "any",
-  "scope": "/turfprowlerv2",
-  "short_name": "turfprowlerv2",
-  "start_url": "/turfprowlerv2",
-  "theme_color": "#ffffff",
-  "id": "richierich067.github.io/turfprowlerv2",
-  "description": "Prowl your turf like a fucking demon"
+  "theme_color": "#ffffff"
 }
