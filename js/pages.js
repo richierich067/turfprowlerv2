@@ -1,5 +1,8 @@
 const pages = {
-    welcome: { id: "#welcome", hook: () => { } },
+    welcome: {
+        id: "#welcome",
+        hook: () => { },
+    },
     chooseArea: {
         id: "#chooseArea",
         hook: () => {
@@ -10,7 +13,7 @@ const pages = {
                 document.querySelector("#setSuburb").value = suburb;
                 document.querySelector("#setPostCode").value = postCode;
             }
-        }
+        },
     },
     editStreets: { id: "#editStreets", hook: renderEditableStreets },
     streetView: {
@@ -24,6 +27,8 @@ const pages = {
     editHouse: {
         id: "#editHouse",
         hook: () => {
+            initActions();
+            renderActions();
             renderAddress();
             renderInfo();
             renderNotes();

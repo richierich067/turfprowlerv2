@@ -1,5 +1,6 @@
 * {
     font-family: monospace;
+    box-sizing: border-box;
 }
 
 body,
@@ -72,7 +73,8 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1rem;
 }
 
 #chooseArea form {
@@ -152,21 +154,13 @@ textarea {
 }
 
 #selectHouse {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100vw;
-}
-
-#houses {
     display: grid;
     grid-template-columns: 5rem 5rem 5rem 5rem 5rem;
     grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
     grid-gap: 0.25rem;
 }
 
-#house button div {
+#selectHouse button div {
     color: white;
     mix-blend-mode: difference;
 }
@@ -193,12 +187,6 @@ textarea {
 
 .house-unknocked {}
 
-#nextFrame,
-#previousFrame {
-    height: 10rem;
-    min-width: 2.5rem;
-}
-
 #editHouse table {
     width: 90vw;
 }
@@ -211,8 +199,9 @@ textarea {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     width: 90vw;
+    gap: 1rem;
 }
 
 #notes {

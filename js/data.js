@@ -1,3 +1,12 @@
+const clearData = () => {
+    const certain = confirm("This will delete all of your data including your suburb, postcode, street names, any doors you've knocked & any notes you've taken. ARE YOU SURE?");
+
+    if (certain) {
+        localStorage.clear();
+        loadPage(pages.welcome);
+    }
+}
+
 const setSuburb = (suburb) => {
     localStorage.setItem("suburb", suburb);
 };
@@ -30,7 +39,7 @@ const setCurrentStreet = (street) => {
     localStorage.setItem("currentStreet", street);
 };
 
-const getCurrentHouse = () => {
+const getCurrentNo = () => {
     return localStorage.getItem("currentHouse");
 };
 
@@ -38,7 +47,7 @@ const setCurrentHouse = (no) => {
     localStorage.setItem("currentHouse", no);
 };
 
-const clearCurrentHouse = () => {
+const clearCurrentNo = () => {
     localStorage.removeItem("currentHouse");
 };
 

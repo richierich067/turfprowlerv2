@@ -55,15 +55,16 @@ const houseStatusCodes = {
     "RK": "house-reknock",
     "Q": "house-qualified",
     "NQ": "house-nonqualified",
-    "K": "house-knock",
+    "K": "house-knocked",
     "?": "house-unknocked",
 };
+
+const selectHouse = document.querySelector("#selectHouse");
 
 let frame = 0;
 const frameWidth = 25;
 
 const renderHouses = () => {
-    const target = document.querySelector("#houses");
     const btns = [];
 
     for (let i = frame; i < frame + frameWidth; ++i) {
@@ -94,7 +95,7 @@ const renderHouses = () => {
         btns.push(btn);
     }
 
-    target.replaceChildren(...btns);
+    selectHouse.replaceChildren(...btns);
 };
 
 const nextHouseFrame = () => {
@@ -106,3 +107,28 @@ const previousHouseFrame = () => {
     frame = frame === 0 ? frame : frame - frameWidth;
     renderHouses();
 };
+
+let touchStartX, touchEndX;
+
+selectHouse.addEventListener("touchstart", (event) => {
+    touchStartX = event.touches[0].clientX;
+});
+
+selectHouse.addEventListener("touchmove", (event) => {
+    if (touchStartX === undefined)
+        return;
+
+    touchEndX = event.touches[0].clientX;
+
+    const diff = touchEndX - touchStartX;
+    const dragThreshold = 25;
+
+    if (diff > dragThreshold) {
+        previousHouseFrame();
+    } else if (diff < -dragThreshold) {
+        nextHouseFrame();
+    }
+
+    touchStartX = undefined;
+    touchEndX = undefined;
+});

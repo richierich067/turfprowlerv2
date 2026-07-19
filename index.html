@@ -51,16 +51,13 @@
             <h2 id="area"></h2>
             <button id="manualChooseArea">Change Area</button>
             <button id="manualEditStreets">Edit Streets</button>
+            <button id="reset">Reset</button>
         </header>
         <div id="selectStreet">
             <!-- Streets are added here as buttons, and clicking on them sets the current street -->
         </div>
         <div id="selectHouse">
-            <button id="previousFrame">&lt;</button>
-            <div id="houses">
-                <!-- Houses are added here as buttons, and clicking on them takes you to the corresponding page to edit the house -->
-            </div>
-            <button id="nextFrame">&gt;</button>
+            <!-- Houses are added here as buttons, and clicking on them takes you to the corresponding page to edit the house -->
         </div>
     </section>
 
@@ -87,15 +84,15 @@
                     <td id="infoQualified"></td>
                     <td id="infoBooked"></td>
                 </tr>
-                <tr>
-                    <td><button id="knock">Knock</button></td>
-                    <td><button id="contact">Contact</button></td>
-                    <td><button id="reknock">Reknock</button></td>
-                    <td><button id="qualify">Qualify</button></td>
-                    <td><button id="book">Book</button></td>
-                </tr>
             </tbody>
         </table>
+        <div id="actions">
+            <button id="knock">Knock</button>
+            <button id="contact">Contact</button>
+            <button id="toggleReknock">Reknock</button>
+            <button id="toggleQualified">Qualify</button>
+            <button id="toggleBooked">Book</button>
+        </div>
         <button id="back">Back</button>
         <form autocomplete="off" autocapitalize="sentence">
             <textarea name="notes" id="notes" placeholder="Notes..."></textarea>
@@ -138,6 +135,11 @@
 
             const fd = new FormData(event.target);
             const obj = Object.fromEntries(fd.entries());
+
+            if (!obj.street) {
+                return;
+            }
+
             const streets = getStreets();
 
             if (!streets.includes(obj.street)) {
@@ -165,36 +167,12 @@
             loadPage(pages.editStreets);
         });
 
-        document.querySelector("#previousFrame").addEventListener("click", (_event) => {
-            previousHouseFrame();
-        })
-
-        document.querySelector("#nextFrame").addEventListener("click", (_event) => {
-            nextHouseFrame();
-        });
-
-        document.querySelector("#knock").addEventListener("click", (_event) => {
-            knock();
-        });
-
-        document.querySelector("#contact").addEventListener("click", (_event) => {
-            contact();
-        });
-
-        document.querySelector("#reknock").addEventListener("click", (_event) => {
-            toggleReknock();
-        });
-
-        document.querySelector("#qualify").addEventListener("click", (_event) => {
-            toggleQualified();
-        });
-
-        document.querySelector("#book").addEventListener("click", (_event) => {
-            toggleBooked();
+        document.querySelector("#reset").addEventListener("click", (_event) => {
+            clearData();
         });
 
         document.querySelector("#back").addEventListener("click", (_event) => {
-            clearCurrentHouse();
+            clearCurrentNo();
             loadPage(pages.streetView);
         })
 

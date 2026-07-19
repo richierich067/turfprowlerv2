@@ -6,13 +6,10 @@ const renderEditableStreets = () => {
     const target = document.querySelector("#editStreets ul");
     const streets = getStreets();
 
-    console.log(target);
-
     if (streets.length === 0) {
         target.replaceChildren("No Streets");
     } else {
         const lis = streets.map((street) => {
-            console.log(street);
             const li = document.createElement("li");
             const name = document.createElement("span");
             const remove = document.createElement("button");
