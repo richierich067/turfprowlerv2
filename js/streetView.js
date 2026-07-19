@@ -114,7 +114,7 @@ selectHouse.addEventListener("touchstart", (event) => {
     touchStartX = event.touches[0].clientX;
 });
 
-selectHouse.addEventListener("touchmove", (event) => {
+selectHouse.addEventListener("touchend", (event) => {
     if (touchStartX === undefined)
         return;
 
